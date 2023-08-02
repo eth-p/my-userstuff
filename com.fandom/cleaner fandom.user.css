@@ -1,0 +1,58 @@
+/* ==UserStyle==
+@name           Cleaner Fandom
+@namespace      github.com/eth-p
+@version        0.1.0
+@description    Cleans up Fandom wiki pages, adding consistency and removing duplicated elements.
+@license        MIT
+@author         eth-p
+@homepageURL    https://github.com/eth-p/my-userstuff
+@updateURL      https://github.com/eth-p/my-userstuff/com.fandom/cleaner+fandom.user.css
+@preprocessor   stylus
+
+@var checkbox   clear_fandom_bar   "Clear Fandom Sidebar"  1
+==/UserStyle== */
+
+@-moz-document domain("fandom.com") {
+	/* Make the Fandom sidebar look like the page theme. */
+	body {
+		/* Background */
+		--fandom-global-nav-background-color: var(--theme-body-background-color);
+
+		/* Icons */
+		--fandom-global-nav-bottom-icon-color: var(--theme-page-text-color);
+		--fandom-global-nav-icon-color: var(--theme-page-text-color);
+		--fandom-global-nav-icon-background-color: var(--theme-page-background-color);
+
+		/* Text */
+		--fandom-global-nav-icon-border-color: var(--theme-page-text-color);
+
+
+		--fandom-global-nav-text-color: var(--theme-page-text-color);
+		--fandom-global-nav-link-color: var(--theme-page-text-color);
+		--fandom-global-nav-link-color--hover: var(--theme-accent-color--hover);
+		--fandom-global-nav-icon-background-color--hover: var(--theme-accent-color);
+		--fandom-global-nav-icon-border-color--hover: var(--theme-accent-color--hover);
+	}
+
+	/* Hide the wikia bar. */
+	.wikia-bar-anon {
+		display: none !important;
+	}
+
+	/* Hide sign in and register. */
+	.global__signin-link,
+	.global__register-link {
+		display: none;
+	}
+
+	/* Hide Fandom stuff from the Fandom bar. */
+	if clear_fandom_bar {
+		.global-navigation__logo {
+			display: none;
+		}
+
+		.global-navigation__links {
+			display: none;
+		}
+	}
+}
