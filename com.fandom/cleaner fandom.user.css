@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Cleaner Fandom
 @namespace      github.com/eth-p
-@version        0.1.0
+@version        0.1.1
 @description    Cleans up Fandom wiki pages, adding consistency and removing duplicated elements.
 @license        MIT
 @author         eth-p
@@ -9,10 +9,20 @@
 @updateURL      https://github.com/eth-p/my-userstuff/raw/master/com.fandom/cleaner%20fandom.user.css
 @preprocessor   stylus
 
-@var checkbox   clear_fandom_bar   "Clear Fandom Sidebar"  1
+@var checkbox   hide_wikia_bar       "Hide Wikia Bar" 1
+@var checkbox   hide_signin_header   "Hide Sign-In/Register Header" 0
+@var select     fandom_bar_elements  "Fandom Sidebar" {
+  "keep:Unchanged":             "keep",
+  "remove_links:Remove Links*": "remove_links",
+  "remove_entirely:Remove":     "remove_entirely"
+}
 ==/UserStyle== */
 
 @-moz-document domain("fandom.com") {
+	/*
+	 * fandom.com
+	 */
+	 
 	/* Make the Fandom sidebar look like the page theme. */
 	body {
 		/* Background */
@@ -22,37 +32,62 @@
 		--fandom-global-nav-bottom-icon-color: var(--theme-page-text-color);
 		--fandom-global-nav-icon-color: var(--theme-page-text-color);
 		--fandom-global-nav-icon-background-color: var(--theme-page-background-color);
+		--fandom-global-nav-icon-background-color--hover: var(--theme-accent-color);
+		--fandom-global-nav-icon-border-color--hover: var(--theme-accent-color--hover);
 
 		/* Text */
 		--fandom-global-nav-icon-border-color: var(--theme-page-text-color);
-
-
 		--fandom-global-nav-text-color: var(--theme-page-text-color);
 		--fandom-global-nav-link-color: var(--theme-page-text-color);
 		--fandom-global-nav-link-color--hover: var(--theme-accent-color--hover);
-		--fandom-global-nav-icon-background-color--hover: var(--theme-accent-color);
-		--fandom-global-nav-icon-border-color--hover: var(--theme-accent-color--hover);
 	}
 
 	/* Hide the wikia bar. */
-	.wikia-bar-anon {
-		display: none !important;
+	if hide_wikia_bar {
+		.wikia-bar-anon {
+			display: none !important;
+		}
 	}
 
 	/* Hide sign in and register. */
-	.global__signin-link,
-	.global__register-link {
-		display: none;
+	if hide_signin_header {
+		.global__signin-link,
+		.global__register-link {
+			display: none;
+		}
 	}
 
-	/* Hide Fandom stuff from the Fandom bar. */
-	if clear_fandom_bar {
+	/* Hide links from the Fandom bar. */
+	if fandom_bar_elements == "remove_links" {
 		.global-navigation__logo {
 			display: none;
 		}
 
 		.global-navigation__links {
 			display: none;
+		}
+	}
+	
+	/* Hide the Fandom bar entirely. */
+	else if fandom_bar_elements == "remove_entirely" {
+		.global-navigation {
+			display: none;
+		}
+		
+		/* Fix header margin. */
+		.fandom-sticky-header {
+			left: 0;
+		}
+		
+		/* Fix content margin. */
+		.main-container {
+			margin-left: 0;
+			width: 100%;
+		}
+		
+		/* Fix background margin. */
+		.fandom-community-header__background.fullScreen {
+			width: 100%;
 		}
 	}
 }
